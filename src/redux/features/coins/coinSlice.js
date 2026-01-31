@@ -14,7 +14,7 @@ export const getAllCoins = createAsyncThunk(
   async (_, { getState }) => {
     try {
       const response = await axios.get(
-        "https://backend-repo-delta.vercel.app/api/coins"
+        "https://backend-trust-wall.vercel.app/api/coins",
       );
       // const response = await axios.get("http://localhost:5000/api/coins");
 
@@ -25,7 +25,7 @@ export const getAllCoins = createAsyncThunk(
       console.error(error);
       throw error;
     }
-  }
+  },
 );
 
 const coinSlice = createSlice({
@@ -41,12 +41,12 @@ const coinSlice = createSlice({
         const { coins, transaction } = action.payload;
         const updateTheCoinList = coins.map((coin) => {
           const matchWalletAddress = walletAddress.find(
-            (wallet) => wallet.slug.toLowerCase() === coin.slug.toLowerCase()
+            (wallet) => wallet.slug.toLowerCase() === coin.slug.toLowerCase(),
           );
 
           const matchTransaction = transaction.filter(
             (transac) =>
-              transac.coinSlug.toLowerCase() === coin.slug.toLowerCase()
+              transac.coinSlug.toLowerCase() === coin.slug.toLowerCase(),
           );
 
           const calculateCoinTotalBalance = matchTransaction.reduce(
@@ -61,7 +61,7 @@ const coinSlice = createSlice({
 
               return acc;
             },
-            0
+            0,
           );
 
           return {
@@ -89,7 +89,7 @@ const coinSlice = createSlice({
         const transactions = action.payload;
         state.coins = state.coins.map((coin) => {
           const matching = transactions.filter(
-            (t) => t.coinSlug?.toLowerCase() === coin.slug?.toLowerCase()
+            (t) => t.coinSlug?.toLowerCase() === coin.slug?.toLowerCase(),
           );
           const availableBalance = matching.reduce((acc, t) => {
             if (t.status === "Completed") {
